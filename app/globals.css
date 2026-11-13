@@ -1,0 +1,198 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   ПИК — дизайн-система
+   Бренд-цвет #FC4C02, шрифт Graphik LCG (локальные woff, next/font/local)
+   ========================================================================== */
+
+@theme {
+  --color-pik: #fc4c02;
+  --color-pik-dark: #d93f00;
+  --color-pik-soft: #fff1ea;
+
+  --color-ink: #141414;
+  --color-ink-2: #3d3d3d;
+  --color-ink-3: #6b6b6b;
+
+  --color-surface: #ffffff;
+  --color-surface-2: #f6f6f6;
+  --color-surface-3: #ededed;
+
+  --color-line: #e4e4e4;
+  --color-line-strong: #cfcfcf;
+
+  --color-success: #1a8f4c;
+
+  --font-sans: var(--font-graphik), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --radius-card: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   База
+   -------------------------------------------------------------------------- */
+
+* {
+  border-color: var(--color-line);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-pik);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-pik);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Служебные утилиты
+   -------------------------------------------------------------------------- */
+
+@utility container-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1360px;
+  padding-inline: 1.25rem;
+
+  @media (width >= 768px) {
+    padding-inline: 2rem;
+  }
+}
+
+@utility section-pad {
+  padding-block: 3.5rem;
+
+  @media (width >= 768px) {
+    padding-block: 5.5rem;
+  }
+}
+
+@utility headline {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+/* --------------------------------------------------------------------------
+   Анимации
+   -------------------------------------------------------------------------- */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease both;
+}
+
+/* --------------------------------------------------------------------------
+   Видео-слайд-шоу в Hero: плавный кроссфейд фоновых видео
+   Активный слайд получает .is-active (переход через transition)
+   -------------------------------------------------------------------------- */
+
+.video-slide {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.video-slide.is-active {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-fade-up,
+  .animate-fade-in {
+    animation: none;
+  }
+  .video-slide {
+    transition: none;
+  }
+  .video-slide:first-child {
+    opacity: 1;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Слайдер-карусель (снап-скролл)
+   -------------------------------------------------------------------------- */
+
+.snap-x-strip {
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.snap-x-strip::-webkit-scrollbar {
+  display: none;
+}
+.snap-x-strip > * {
+  scroll-snap-align: start;
+}
+
+/* --------------------------------------------------------------------------
+   Штриховка для карточек-заглушек
+   -------------------------------------------------------------------------- */
+
+.hatch {
+  background-image: linear-gradient(
+    -45deg,
+    var(--color-surface-3) 25%,
+    transparent 25%,
+    transparent 50%,
+    var(--color-surface-3) 50%,
+    var(--color-surface-3) 75%,
+    transparent 75%
+  );
+  background-size: 14px 14px;
+}
